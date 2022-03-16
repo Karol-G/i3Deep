@@ -4,26 +4,26 @@
 
 ## Architecture
 
-![](images/My_Framework.png)
+![](/images/My_Framework.png)
 
 1. The presegmentation model is used to run inference on new unseen subjects to provide presegmentations alongside uncertainties from the model.
 2. A one-shot slice acquisition function selects multiple slices for each subject in axial, coronal and sagittal orientation from the 3D image based on the quantified uncertainties.
 3. The acquired slices of the previous stage are sent to the expert for correction.
 4. The corrected slices are projected into an empty volume back into their original positions. Then this volume is concatenated with the original image and used for inference by the refinement model, which significantly improves the segmentation (see Figure 2).
 
-![](images/Refinement_nnU-Net.jpg)
+![](/images/Refinement_nnU-Net.jpg)
 
 
 ## Results
 
 Dice score results of i3Deep against the presegmentation and multiple state-of-the-art baselines evaluated on a brain tumor, pancreas and COVID-19 dataset:
 
-![](images/results/results.png)
+![](/images/results/results.png)
 
 ### Qualitative examples
 
-![](images/results/qualitative_results/Brain_Tumor.png)
+![](/images/results/qualitative_results/Brain_Tumor.png)
 
-![](images/results/qualitative_results/Pancreas.png)
+![](/images/results/qualitative_results/Pancreas.png)
 
-![](images/results/qualitative_results/COVID-19.png)
+![](/images/results/qualitative_results/COVID-19.png)
