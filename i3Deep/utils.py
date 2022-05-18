@@ -2,7 +2,7 @@ import numpy as np
 import os
 from natsort import natsorted
 import nibabel as nib
-from nilearn.image import resample_img
+# from nilearn.image import resample_img
 import torch
 from torch.nn import functional as F
 from scipy.ndimage import affine_transform
