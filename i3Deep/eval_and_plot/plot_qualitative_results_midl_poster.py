@@ -28,15 +28,16 @@ from os.path import join
 #         plt.clf()
 
 def plot():
+    fig = plt.figure(constrained_layout=True)
+    gs = fig.add_gridspec(9, 9)
+    # gs.update(wspace=0.0025, hspace=0.0025)  # set the spacing between axes.
     for i, task in enumerate(tasks):
-        filenames = utils.load_filenames(base_path + task + "/qualitative_results/cropped/")
-        fig = plt.figure(constrained_layout=True)
-        gs = fig.add_gridspec(2, 3)
-        # gs.update(wspace=0.0025, hspace=0.0025)  # set the spacing between axes.
         for j, method in enumerate(methods):
             image = plt.imread(join(base_path, task, "qualitative_results", "cropped", method + ".png"))
             name = methods[method]
-            ax = fig.add_subplot(gs[gridspec_indices[method][0], gridspec_indices[method][1]])
+            x = slice(j*3, j*3+1)
+            y = slice(i*3, i*3+1)
+            ax = fig.add_subplot(gs[x, y])
             ax.imshow(image)
             ax.set_title(name)
             ax.axes.xaxis.set_visible(False)
@@ -44,23 +45,15 @@ def plot():
             ax.axis('off')
         # plt.tight_layout()
         # plt.margins(0, 0)
-        plt.suptitle(task_names[i], fontsize=16)
-        # plt.show()
-        plt.savefig(base_path + "qualitative_results/" + task_names[i] + ".png", bbox_inches='tight')
-        plt.clf()
+        # plt.suptitle(task_names[i], fontsize=16)
+        # # plt.show()
+    plt.savefig(base_path + "qualitative_results/all.png", bbox_inches='tight')
+    plt.clf()
 
 
 if __name__ == '__main__':
     base_path = "C:/Users/k539i/Documents/syncthing-DKFZ/My Papers/i3Deep/Evaluation results & Overleaf/Results/"
     tasks = ["Task002_BrainTumour_guided", "Task008_Pancreas_guided", "Task070_guided_all_public_ggo"]
     task_names = ["Brain Tumor", "Pancreas", "COVID-19"]
-    methods = {"automatic": "Presegmentation", "gt": "Ground Truth", "my_method": "i3Deep"}
-    # gridspec_indices = [[slice(0, 1), slice(0, 1)], [slice(0, 1), slice(1, 2)], [slice(0, 1), slice(2, 3)], [slice(1, 2), slice(0, 1)], [slice(1, 2), slice(1, 2)], [slice(1, 2), slice(2, 3)]]
-    gridspec_indices = {"gt": [slice(0, 1), slice(0, 1)],
-                        "automatic": [slice(0, 1), slice(1, 2)],
-                        "my_method": [slice(0, 1), slice(2, 3)],
-                        "P_Net": [slice(1, 2), slice(0, 1)],
-                        "watershed": [slice(1, 2), slice(1, 2)],
-                        "random_walker": [slice(1, 2), slice(2, 3)],
-                        "graphcut": [slice(1, 2), slice(2, 3)]}
+    methods = {"gt": "Ground Truth", "automatic": "Preseg.", "my_method": "i3Deep"}
     plot()
