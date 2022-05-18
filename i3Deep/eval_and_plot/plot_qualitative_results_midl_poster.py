@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from i3Deep import utils
 import os
+from os.path import join
 
 # def plot():
 #     for i, task in enumerate(tasks):
@@ -29,19 +30,18 @@ import os
 def plot():
     for i, task in enumerate(tasks):
         filenames = utils.load_filenames(base_path + task + "/qualitative_results/cropped/")
-        filename = [filename for filename in filenames if "my_method" in filename][0]
         fig = plt.figure(constrained_layout=True)
         gs = fig.add_gridspec(2, 3)
         # gs.update(wspace=0.0025, hspace=0.0025)  # set the spacing between axes.
-        image = plt.imread(filename)
-        method = os.path.basename(filename)[:-4]
-        name = methods[method]
-        ax = fig.add_subplot(gs[gridspec_indices[method][0], gridspec_indices[method][1]])
-        ax.imshow(image)
-        ax.set_title(name)
-        ax.axes.xaxis.set_visible(False)
-        ax.axes.yaxis.set_visible(False)
-        ax.axis('off')
+        for j, method in enumerate(methods):
+            image = plt.imread(join(base_path, task, "qualitative_results", "cropped", method + ".png"))
+            name = methods[method]
+            ax = fig.add_subplot(gs[gridspec_indices[method][0], gridspec_indices[method][1]])
+            ax.imshow(image)
+            ax.set_title(name)
+            ax.axes.xaxis.set_visible(False)
+            ax.axes.yaxis.set_visible(False)
+            ax.axis('off')
         # plt.tight_layout()
         # plt.margins(0, 0)
         plt.suptitle(task_names[i], fontsize=16)
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     base_path = "C:/Users/k539i/Documents/syncthing-DKFZ/My Papers/i3Deep/Evaluation results & Overleaf/Results/"
     tasks = ["Task002_BrainTumour_guided", "Task008_Pancreas_guided", "Task070_guided_all_public_ggo"]
     task_names = ["Brain Tumor", "Pancreas", "COVID-19"]
-    methods = {"automatic": "Presegmentation", "gt": "Ground Truth", "my_method": "i3Deep", "P_Net": "P-Net", "random_walker": "Random Walker", "watershed": "Watershed", "graphcut": "GraphCut"}
+    methods = {"automatic": "Presegmentation", "gt": "Ground Truth", "my_method": "i3Deep"}
     # gridspec_indices = [[slice(0, 1), slice(0, 1)], [slice(0, 1), slice(1, 2)], [slice(0, 1), slice(2, 3)], [slice(1, 2), slice(0, 1)], [slice(1, 2), slice(1, 2)], [slice(1, 2), slice(2, 3)]]
     gridspec_indices = {"gt": [slice(0, 1), slice(0, 1)],
                         "automatic": [slice(0, 1), slice(1, 2)],
