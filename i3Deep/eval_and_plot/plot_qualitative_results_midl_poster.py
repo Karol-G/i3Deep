@@ -29,14 +29,15 @@ from os.path import join
 
 def plot():
     fig = plt.figure(constrained_layout=True)
-    gs = fig.add_gridspec(9, 9)
+    # gs = fig.add_gridspec(3, 3, width_ratios=[0.1, 0.3, 0.3])
+    gs = fig.add_gridspec(3, 3)
     # gs.update(wspace=0.0025, hspace=0.0025)  # set the spacing between axes.
     for i, task in enumerate(tasks):
         for j, method in enumerate(methods):
             image = plt.imread(join(base_path, task, "qualitative_results", "cropped", method + ".png"))
             name = methods[method]
-            x = slice(j*3, j*3+1)
-            y = slice(i*3, i*3+1)
+            x = slice(j, j+1)
+            y = slice(i, i+1)
             ax = fig.add_subplot(gs[x, y])
             ax.imshow(image)
             ax.set_title(name)
@@ -47,6 +48,7 @@ def plot():
         # plt.margins(0, 0)
         # plt.suptitle(task_names[i], fontsize=16)
         # # plt.show()
+    # plt.subplots_adjust(wspace=1, hspace=1)
     plt.savefig(base_path + "qualitative_results/all.png", bbox_inches='tight')
     plt.clf()
 
