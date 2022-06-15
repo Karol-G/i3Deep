@@ -24,7 +24,7 @@ def plot_dice_box_plots():
         for j, class_name in enumerate(task_classes[i]):
             df_methods = {}
             for k, method in enumerate(methods[i]):
-                filename = base_path + task + "/refinement_" + set + "/eval_results/processed/dice/" + method + ".csv"
+                filename = base_path + task + "/processed/dice/" + method + ".csv"
                 if not os.path.isfile(filename):
                     continue
                 df = pd.read_csv(filename)
@@ -44,12 +44,12 @@ def plot_dice_box_plots():
             axs.set_title("{}".format(class_name), fontsize=16)
         # fig.set_aspect(3)
         #plt.suptitle("{}".format(task_names[i]))# , fontsize=16)
-    plt.savefig(base_path + "Evaluation/Results/" + set + "/results.png", dpi=150, bbox_inches='tight')
+    plt.savefig(base_path + "/results_high_res.svg", bbox_inches='tight')
     plt.clf()
 
 
 if __name__ == '__main__':
-    base_path = "/gris/gris-f/homelv/kgotkows/datasets/nnUnet_datasets/nnUNet_raw_data/nnUNet_raw_data/"
+    base_path = "C:/Users/k539i/Documents/syncthing-DKFZ/My Papers/i3Deep/Evaluation/Results/"
     tasks = ["Task002_BrainTumour_guided", "Task008_Pancreas_guided", "Task070_guided_all_public_ggo"]
     task_names = ["Brain Tumor", "Pancreas", "COVID-19"]
     task_classes = [["Brain Tumor - Edema", "Brain Tumor - Non-enhancing Tumor", "Brain Tumor - Enhancing Tumor"], ["Pancreas - Pancreas", "Pancreas - Cancer"], ["COVID-19 - GGO"]]
